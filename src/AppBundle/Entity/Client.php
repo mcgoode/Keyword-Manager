@@ -74,7 +74,7 @@ class Client
     /**
      *
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="client")
-     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     * @ORM\JoinColumn(name="products", referencedColumnName="id")
      */
     private $products;
 
