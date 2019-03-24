@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ClientController extends Controller
 {
     /**
-     * @Route("/clients", name="client_index")
+     * @Route("/clients", name="client_list")
      */
     public function listAction()
     {
