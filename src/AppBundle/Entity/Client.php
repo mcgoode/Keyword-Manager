@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,6 +70,18 @@ class Client
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="client")
+     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
 
     /**
@@ -247,6 +260,22 @@ class Client
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param mixed $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
     }
 }
 

@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Products
+ * Product
  *
- * @ORM\Table(name="products")
+ * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductsRepository")
  */
-class Products
+class Product
 {
     /**
      * @var int
@@ -43,11 +44,23 @@ class Products
     private $addedBy;
 
     /**
-     * @var string
+     * @var Client
      *
-     * @ORM\Column(name="client", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Client", mappedBy="products")
      */
     private $client;
+
+    /**
+     * @var Campaign
+     * @ORM\ManyToOne(targetEntity="campaign", inversedBy="product")
+     * @ORM\JoinColumn(name="campaign", referencedColumnName="id")
+     */
+    private $campaigns;
+
+    public function __construct()
+    {
+        $this->campaigns = new ArrayCollection();
+    }
 
 
     /**
@@ -65,7 +78,7 @@ class Products
      *
      * @param string $name
      *
-     * @return Products
+     * @return Product
      */
     public function setName($name)
     {
@@ -89,7 +102,7 @@ class Products
      *
      * @param \DateTime $addedOn
      *
-     * @return Products
+     * @return Product
      */
     public function setAddedOn($addedOn)
     {
@@ -113,7 +126,7 @@ class Products
      *
      * @param string $addedBy
      *
-     * @return Products
+     * @return Product
      */
     public function setAddedBy($addedBy)
     {
@@ -137,7 +150,7 @@ class Products
      *
      * @param string $client
      *
-     * @return Products
+     * @return Product
      */
     public function setClient($client)
     {
@@ -154,6 +167,22 @@ class Products
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
+    }
+
+    /**
+     * @param mixed $campaigns
+     */
+    public function setCampaigns($campaigns)
+    {
+        $this->campaigns = $campaigns;
     }
 }
 
