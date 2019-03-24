@@ -80,9 +80,9 @@ class Campaign
     /**
      * @var bool
      *
-     * @ORM\Column(name="isKeywordDeactivated", type="boolean")
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $isKeywordDeactivated;
+    private $active;
 
     /**
      * @var Product
@@ -295,27 +295,27 @@ class Campaign
     }
 
     /**
-     * Set isKeywordDeactivated
+     * Set active
      *
-     * @param boolean $isKeywordDeactivated
+     * @param boolean $active
      *
      * @return Campaign
      */
-    public function setIsKeywordDeactivated($isKeywordDeactivated)
+    public function setActive($active)
     {
-        $this->isKeywordDeactivated = $isKeywordDeactivated;
+        $this->active = $active;
 
         return $this;
     }
 
     /**
-     * Get isKeywordDeactivated
+     * Get active
      *
      * @return bool
      */
-    public function getIsKeywordDeactivated()
+    public function getActive()
     {
-        return $this->isKeywordDeactivated;
+        return $this->active;
     }
 
     /**

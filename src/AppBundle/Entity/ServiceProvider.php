@@ -45,30 +45,30 @@ class ServiceProvider
     /**
      * @var string
      *
-     * @ORM\Column(name="addedBy", type="string", length=255)
+     * @ORM\Column(name="createdBy", type="string", length=255)
      */
-    private $addedBy;
+    private $createdBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="addedOn", type="date")
+     * @ORM\Column(name="createdOn", type="date")
      */
-    private $addedOn;
+    private $createdOn;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="deactivatedBy", type="string", length=255)
+     * @ORM\Column(name="removedBy", type="string", length=255)
      */
-    private $deactivatedBy;
+    private $removedBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deactivedOn", type="date")
+     * @ORM\Column(name="removedOn", type="date")
      */
-    private $deactivedOn;
+    private $removedOn;
 
 
     /**
@@ -154,99 +154,99 @@ class ServiceProvider
     }
 
     /**
-     * Set addedBy
+     * Set createdBy
      *
-     * @param string $addedBy
+     * @param string $createdBy
      *
      * @return ServiceProvider
      */
-    public function setAddedBy($addedBy)
+    public function setCreatedBy($createdBy)
     {
-        $this->addedBy = $addedBy;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
 
     /**
-     * Get addedBy
+     * Get createdBy
      *
      * @return string
      */
-    public function getAddedBy()
+    public function getCreatedBy()
     {
-        return $this->addedBy;
+        return $this->createdBy;
     }
 
     /**
-     * Set addedOn
+     * Set createdOn
      *
-     * @param \DateTime $addedOn
+     * @param \DateTime $createdOn
      *
      * @return ServiceProvider
      */
-    public function setAddedOn($addedOn)
+    public function setCreatedOn($createdOn)
     {
-        $this->addedOn = $addedOn;
+        $this->createdOn = $createdOn;
 
         return $this;
     }
 
     /**
-     * Get addedOn
+     * Get createdOn
      *
      * @return \DateTime
      */
-    public function getAddedOn()
+    public function getCreatedOn()
     {
-        return $this->addedOn;
+        return $this->createdOn;
     }
 
     /**
-     * Set deactivatedBy
+     * Set removedBy
      *
-     * @param string $deactivatedBy
+     * @param string $removedBy
      *
      * @return ServiceProvider
      */
-    public function setDeactivatedBy($deactivatedBy)
+    public function setRemovedBy($removedBy)
     {
-        $this->deactivatedBy = $deactivatedBy;
+        $this->removedBy = $removedBy;
 
         return $this;
     }
 
     /**
-     * Get deactivatedBy
+     * Get removedBy
      *
      * @return string
      */
-    public function getDeactivatedBy()
+    public function getRemovedBy()
     {
-        return $this->deactivatedBy;
+        return $this->removedBy;
     }
 
     /**
-     * Set deactivedOn
+     * Set removedOn
      *
-     * @param \DateTime $deactivedOn
+     * @param \DateTime $removedOn
      *
      * @return ServiceProvider
      */
-    public function setDeactivedOn($deactivedOn)
+    public function setRemovedOn($removedOn)
     {
-        $this->deactivedOn = $deactivedOn;
+        $this->removedOn = $removedOn;
 
         return $this;
     }
 
     /**
-     * Get deactivedOn
+     * Get removedOn
      *
      * @return \DateTime
      */
-    public function getDeactivedOn()
+    public function getRemovedOn()
     {
-        return $this->deactivedOn;
+        return $this->removedOn;
     }
 }
 

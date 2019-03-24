@@ -32,16 +32,30 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="addedOn", type="date")
+     * @ORM\Column(name="createdOn", type="date")
      */
-    private $addedOn;
+    private $createdOn;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="addedBy", type="string", length=255)
+     * @ORM\Column(name="createdBy", type="string", length=255)
      */
-    private $addedBy;
+    private $createdBy;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="removedOn", type="date", length=255)
+     */
+    private $removedOn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="removedBy", type="string", length=255)
+     */
+    private $removedBy;
 
     /**
      * @var Client
@@ -52,8 +66,9 @@ class Product
 
     /**
      * @var Campaign
+     *
      * @ORM\ManyToOne(targetEntity="campaign", inversedBy="product")
-     * @ORM\JoinColumn(name="campaign", referencedColumnName="id")
+     * @ORM\JoinColumn(name="campaigns", referencedColumnName="id")
      */
     private $campaigns;
 
@@ -61,7 +76,6 @@ class Product
     {
         $this->campaigns = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -100,37 +114,37 @@ class Product
     /**
      * Set addedOn
      *
-     * @param \DateTime $addedOn
+     * @param \DateTime $createdOn
      *
      * @return Product
      */
-    public function setAddedOn($addedOn)
+    public function setCreatedOn($createdOn)
     {
-        $this->addedOn = $addedOn;
+        $this->createdOn = $createdOn;
 
         return $this;
     }
 
     /**
-     * Get addedOn
+     * Get createdOn
      *
      * @return \DateTime
      */
-    public function getAddedOn()
+    public function getCreatedOn()
     {
-        return $this->addedOn;
+        return $this->createdOn;
     }
 
     /**
-     * Set addedBy
+     * Set createdBy
      *
-     * @param string $addedBy
+     * @param string $createdBy
      *
      * @return Product
      */
-    public function setAddedBy($addedBy)
+    public function setCreatedBy($createdBy)
     {
-        $this->addedBy = $addedBy;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
@@ -140,9 +154,56 @@ class Product
      *
      * @return string
      */
-    public function getAddedBy()
+    public function getCreatedBy()
     {
-        return $this->addedBy;
+        return $this->createdBy;
+    }
+
+    /**
+     * Get removedOn
+     *
+     * @return \DateTime
+     */
+    public function getRemovedOn()
+    {
+        return $this->removedOn;
+    }
+
+    /**
+     * Set removedOn
+     * @param \DateTime $removedOn
+     *
+     * @return Product
+     */
+    public function setRemovedOn($removedOn)
+    {
+        $this->removedOn = $removedOn;
+
+        return $this;
+    }
+
+    /**
+     * Get removedBy
+     *
+     * @return string
+     */
+    public function getRemovedBy()
+    {
+        return $this->removedBy;
+    }
+
+    /**
+     * Set removedBy
+     *
+     * @param string $removedBy
+     *
+     * @return Product
+     */
+    public function setRemovedBy($removedBy)
+    {
+        $this->removedBy = $removedBy;
+
+        return $this;
     }
 
     /**
