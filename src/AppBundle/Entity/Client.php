@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Client
@@ -25,6 +26,14 @@ class Client
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 1,
+     *     max = 200,
+     *     minMessage = "Client name must be at least {{ limit }} characters long.",
+     *     maxMessage = "Client name cannot be longer than {{ limit }} characters."
+     * )
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -32,6 +41,13 @@ class Client
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 5,
+     *     max = 200,
+     *     minMessage = "Client address must be at least {{ limit }} characters long.",
+     *     maxMessage = "Client address cannot be longer than {{ limit }} characters."
+     * )
      * @ORM\Column(name="addressOne", type="string", length=255)
      */
     private $addressOne;
@@ -39,13 +55,20 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="addressTwo", type="string", length=255)
+     * @ORM\Column(name="addressTwo", type="string", length=255, nullable=true)
      */
     private $addressTwo;
 
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 200,
+     *     minMessage="Client city must be at least {{ limit }} characters long.",
+     *     maxMessage="Client city cannot be longer than {{ limit }} characters."
+     * )
      * @ORM\Column(name="City", type="string", length=255)
      */
     private $city;
@@ -53,6 +76,13 @@ class Client
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 200,
+     *     minMessage="Client state must be at least {{ limit }} characters long.",
+     *     maxMessage="Client state cannot be longer than {{ limit }} characters."
+     * )
      * @ORM\Column(name="state", type="string", length=255)
      */
     private $state;
@@ -60,16 +90,27 @@ class Client
     /**
      * @var int
      *
-     * @ORM\Column(name="zipFour", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 5,
+     *     max = 5,
+     *     minMessage="Client address must be at least {{ limit }} characters long.",
+     *     maxMessage="Client address cannot be longer than {{ limit }} characters."
+     * )
+     * @ORM\Column(name="zipFive", type="integer")
      */
-    private $zipFour;
+    private $zipFive;
 
     /**
+     * Defaults to true state meaning it does exist in the service providers application.
+     *
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @Assert\Choice({"True","False"})
+     *
+     * @ORM\Column(name="isActive", type="boolean")
      */
-    private $active;
+    private $isActive;
 
     /**
      *
@@ -215,51 +256,51 @@ class Client
     }
 
     /**
-     * Set zipFour
+     * Set zipFive
      *
-     * @param integer $zipFour
+     * @param integer $zipFive
      *
      * @return Client
      */
-    public function setZipFour($zipFour)
+    public function setZipFive($zipFive)
     {
-        $this->zipFour = $zipFour;
+        $this->zipFive = $zipFive;
 
         return $this;
     }
 
     /**
-     * Get zipFour
+     * Get zipFive
      *
      * @return int
      */
-    public function getZipFour()
+    public function getZipFive()
     {
-        return $this->zipFour;
+        return $this->zipFive;
     }
 
     /**
-     * Set active
+     * Set isActive
      *
-     * @param boolean $active
+     * @param boolean $isActive
      *
      * @return Client
      */
-    public function setActive($active)
+    public function setIsActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get active
+     * Get isActive
      *
      * @return bool
      */
-    public function getActive()
+    public function getIsActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**

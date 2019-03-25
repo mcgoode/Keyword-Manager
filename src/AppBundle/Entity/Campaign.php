@@ -3,11 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Campaign
  *
- * @ORM\Table(name="campaign")
+ * Unique constraint to prevent registering campaigns with the same keyword, shortcode and  endDate
+ * @ORM\Table(name="campaign", uniqueConstraints={@UniqueConstraint(name="campaign_uq", columns={"keyword", "shortcode", "endDate"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CampaignRepository")
  */
 class Campaign
@@ -87,7 +89,7 @@ class Campaign
     /**
      * @var Product
      *
-     * @ORM\ManyToOne(targetEntity="product", inversedBy="campaigns")
+     * @ORM\OneToMany(targetEntity="Product",mappedBy="campaigns")
      */
     private $product;
 

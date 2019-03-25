@@ -67,7 +67,7 @@ class Product
     /**
      * @var Campaign
      *
-     * @ORM\ManyToOne(targetEntity="campaign", inversedBy="product")
+     * @ORM\ManyToOne(targetEntity="Campaign", inversedBy="product")
      * @ORM\JoinColumn(name="campaigns", referencedColumnName="id")
      */
     private $campaigns;

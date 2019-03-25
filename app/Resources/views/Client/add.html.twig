@@ -1,7 +1,21 @@
 {% extends "base.html.twig" %}
 
-{% block title %}AppBundle:Client:add{% endblock %}
+{% block title %}Create Client{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Client:add page</h1>
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+<h1>Create new client</h1>
+    {% include 'Client/_form.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+
+    </script>
 {% endblock %}

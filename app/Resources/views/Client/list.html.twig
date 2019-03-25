@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Client List{% endblock %}
 
 {% block head %}
     {{ parent() }}
@@ -13,7 +13,7 @@
         <h1 class="h2">Clients</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <button type="button" class="btn btn-sm btn-outline-success">Add Client</button>
+                <a href="{{ path('client_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Client</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -34,15 +34,18 @@
             </tr>
             </thead>
             <tbody>
+            {# @var client \AppBundle\Entity\Client #}
+            {% for client in clients %}
             <tr>
-                <td>Pizza Hut</td>
-                <td>123 Maint Street</td>
-                <td>#23</td>
-                <td>city</td>
-                <td>state</td>
-                <td>zip</td>
-                <td>true</td>
+                <td><a href="{{ path('client_modify', {'id': client.id}) }}">{{ client.name }}</a></td>
+                <td>{{ client.addressOne }}</td>
+                <td>{{ client.addressTwo }}</td>
+                <td>{{ client.city }}</td>
+                <td>{{ client.state }}</td>
+                <td>{{ client.zipFive }}</td>
+                <td>{{ client.isActive ? 'Yes':'No' }}</td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

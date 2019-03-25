@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Client;
+use AppBundle\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ClientController extends Controller
@@ -12,29 +15,77 @@ class ClientController extends Controller
      */
     public function listAction()
     {
-        return $this->render('Client/list.html.twig', array(
-            // ...
-        ));
+        // can easily paginate this list to handle LARGE amounts of data
+        $activeClients = $this->getDoctrine()->getRepository(Client::class)->findAll();
+
+        return $this->render('Client/list.html.twig',[
+            'clients'=>$activeClients
+        ]);
     }
 
     /**
-     * @Route("/client/add")
+     * @Route("/client/add", name="client_add")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return $this->render('Client/add.html.twig', array(
-            // ...
-        ));
+        $client = new Client();
+
+        $form = $this->createForm(ClientType::class, $client);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+             //$form->getData() holds the submitted values
+            // but, the original `$client` variable has also been updated
+
+            $client = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+             $em = $this->getDoctrine()->getManager();
+             $em->persist($client);
+             $em->flush();
+
+            return $this->redirectToRoute('client_list');
+        }
+
+        return $this->render('Client/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/client/modify")
+     *
+     * @Route("/client/{id}/modify", name="client_modify")
+     * @param Client $client
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function modifyAction()
+    public function modifyAction(Client $client, Request $request)
     {
-        return $this->render('Client/modify.html.twig', array(
-            // ...
-        ));
-    }
 
+        $form = $this->createForm(ClientType::class, $client);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$form->getData() holds the submitted values
+            // but, the original `$client` variable has also been updated
+
+            $client = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($client);
+
+
+            return $this->redirectToRoute('client_list');
+        }
+
+        return $this->render('Client/modify.html.twig', [
+            'form' => $form->createView(),
+            'client' => $client
+        ]);
+    }
 }
