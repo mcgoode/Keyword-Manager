@@ -4,11 +4,16 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Product
  *
- * @ORM\Table(name="product")
+ * Client cannot have two of the same product names, easily removed, but keeps duplicate data down
+ *
+ * @ORM\Table(name="product",uniqueConstraints={@UniqueConstraint(name="product_uq", columns={"name", "client"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductsRepository")
  */
 class Product
@@ -25,12 +30,22 @@ class Product
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min = 1,
+     *     max = 200,
+     *     minMessage = "Product name must be at least {{ limit }} characters long.",
+     *     maxMessage = "Product name cannot be longer than {{ limit }} characters."
+     * )
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var \DateTime
+     *
+     * @Assert\DateTime()
      *
      * @ORM\Column(name="createdOn", type="date")
      */
@@ -39,6 +54,8 @@ class Product
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     *
      * @ORM\Column(name="createdBy", type="string", length=255)
      */
     private $createdBy;
@@ -46,14 +63,16 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="removedOn", type="date", length=255)
+     * @Assert\DateTime()
+     *
+     * @ORM\Column(name="removedOn", type="date", length=255, nullable=true)
      */
     private $removedOn;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="removedBy", type="string", length=255)
+     * @ORM\Column(name="removedBy", type="string", length=255, nullable=true)
      */
     private $removedBy;
 
