@@ -1,7 +1,21 @@
 {% extends "base.html.twig" %}
 
-{% block title %}AppBundle:Product:modify{% endblock %}
+{% block title %}Modify {{ product.name }} for {{ product.client.name }}{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Product:modify page</h1>
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+    <h1>Modify PRODUCT</h1>
+    {% include 'Product/_form.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+
+    </script>
 {% endblock %}

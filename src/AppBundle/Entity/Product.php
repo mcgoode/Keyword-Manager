@@ -228,11 +228,11 @@ class Product
     /**
      * Set client
      *
-     * @param string $client
+     * @param Client $client
      *
      * @return Product
      */
-    public function setClient($client)
+    public function setClient(Client $client)
     {
         $this->client = $client;
 
@@ -242,7 +242,7 @@ class Product
     /**
      * Get client
      *
-     * @return string
+     * @return Client
      */
     public function getClient()
     {

@@ -1,7 +1,21 @@
 {% extends "base.html.twig" %}
 
-{% block title %}AppBundle:Product:add{% endblock %}
+{% block title %}Create Product{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Product:add page</h1>
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+    <h1>Create new product</h1>
+    {% include 'Product/_form.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+
+    </script>
 {% endblock %}

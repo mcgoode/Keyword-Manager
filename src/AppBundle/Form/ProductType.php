@@ -2,7 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,19 +18,21 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('createdOn')
-            ->add('createdBy')
-            ->add('removedOn')
-            ->add('removedBy')
-            ->add('campaigns')
+            ->add('client',EntityType::class,[
+                'class'=>'AppBundle\Entity\Client',
+                'choice_label'=>'name'
+            ])
+            ->add('save', SubmitType::class)
         ;
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Product'
+            'data_class' => Product::class
         ));
     }
 

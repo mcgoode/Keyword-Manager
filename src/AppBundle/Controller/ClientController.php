@@ -24,7 +24,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/client/add", name="client_add")
+     * @Route("/clients/add", name="client_add")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -57,7 +57,7 @@ class ClientController extends Controller
 
     /**
      *
-     * @Route("/client/{id}/modify", name="client_modify")
+     * @Route("/clients/{id}/modify", name="client_modify")
      * @param Client $client
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -69,16 +69,9 @@ class ClientController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //$form->getData() holds the submitted values
-            // but, the original `$client` variable has also been updated
 
-            $client = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
-            $em->persist($client);
-
+            $em->flush(); // update
 
             return $this->redirectToRoute('client_list');
         }
