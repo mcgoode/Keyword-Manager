@@ -3,12 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ServiceProvider
  *
- * @ORM\Table(name="service_provider")
+ * @ORM\Table(name="service_provider", uniqueConstraints={@UniqueConstraint(name="provider_uq", columns={"shortcode"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ServiceProviderRepository")
+ * @UniqueEntity(fields={"shortcode"}, message="There is already a provider with that shortcode!")
  */
 class ServiceProvider
 {
@@ -24,12 +28,16 @@ class ServiceProvider
     /**
      * @var int
      *
-     * @ORM\Column(name="provider", type="integer")
+     * @Assert\NotBlank()
+     *
+     * @ORM\Column(name="provider", type="string")
      */
     private $provider;
 
     /**
      * @var int
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="shortcode", type="integer")
      */
@@ -59,14 +67,14 @@ class ServiceProvider
     /**
      * @var string
      *
-     * @ORM\Column(name="removedBy", type="string", length=255)
+     * @ORM\Column(name="removedBy", type="string", length=255, nullable=true)
      */
     private $removedBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="removedOn", type="date")
+     * @ORM\Column(name="removedOn", type="date", nullable=true)
      */
     private $removedOn;
 

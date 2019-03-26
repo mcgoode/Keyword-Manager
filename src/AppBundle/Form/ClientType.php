@@ -33,7 +33,6 @@ class ClientType extends AbstractType
                     'No' => false
                 ]
             ])
-            ->add('products')
             ->add('save', SubmitType::class)
         ;
     }

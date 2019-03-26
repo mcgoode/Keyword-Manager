@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ServiceProviderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByActiveAndNotRemoved()
+    {
+        return $this->createQueryBuilder('sp')
+            ->andWhere('sp.active = true')
+            ->andWhere('sp.removedBy is null')
+            ->andWhere('sp.removedOn is null')
+//            ->setParameter('isActive',true)
+            ;
+    }
+
 }

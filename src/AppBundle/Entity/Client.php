@@ -114,8 +114,7 @@ class Client
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="client")
-     * @ORM\JoinColumn(name="products", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="client")
      */
     private $products;
 
@@ -312,11 +311,36 @@ class Client
     }
 
     /**
-     * @param mixed $products
+     * @param ArrayCollection $products
      */
-    public function setProducts($products)
+    public function setProducts(ArrayCollection $products)
     {
         $this->products = $products;
     }
-}
 
+    /**
+     * Add product.
+     *
+     * @param Product $product
+     *
+     * @return Client
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product.
+     *
+     * @param Product $product
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeProduct(Product $product)
+    {
+        return $this->products->removeElement($product);
+    }
+}

@@ -4,13 +4,16 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Campaign
  *
  * Unique constraint to prevent registering campaigns with the same keyword, shortcode and  endDate
- * @ORM\Table(name="campaign", uniqueConstraints={@UniqueConstraint(name="campaign_uq", columns={"keyword", "shortcode", "endDate"})})
+ * @ORM\Table(name="campaign", uniqueConstraints={@UniqueConstraint(name="campaign_uq", columns={"keyword","shortcode_id", "active"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CampaignRepository")
+ * @UniqueEntity(fields={"keyword","shortcode","active"}, message="There is already an acitve campaign on they keyword and shorcode!")
  */
 class Campaign
 {
@@ -26,14 +29,21 @@ class Campaign
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     *
      * @ORM\Column(name="keyword", type="string", length=255)
      */
     private $keyword;
 
     /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $name;
+
+    /**
      * @var int
      *
-     * @ORM\Column(name="shortcode", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ServiceProvider")
      */
     private $shortcode;
 
@@ -68,7 +78,7 @@ class Campaign
     /**
      * @var string
      *
-     * @ORM\Column(name="removedBy", type="string", length=255)
+     * @ORM\Column(name="removedBy", type="string", length=255, nullable=true)
      */
     private $removedBy;
 
@@ -89,7 +99,8 @@ class Campaign
     /**
      * @var Product
      *
-     * @ORM\OneToMany(targetEntity="Product",mappedBy="campaigns")
+     * @ORM\ManyToOne(targetEntity="Product",inversedBy="campaigns")
+     * @ORM\JoinColumn(name="productId", referencedColumnName="id")
      */
     private $product;
 
@@ -198,30 +209,6 @@ class Campaign
     public function getEndDate()
     {
         return $this->endDate;
-    }
-
-    /**
-     * Set addedBy
-     *
-     * @param $createdBy
-     *
-     * @return Campaign
-     */
-    public function setAddedBy($createdBy)
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Get addedBy
-     *
-     * @return string
-     */
-    public function getAddedBy()
-    {
-        return $this->createdBy;
     }
 
     /**
@@ -343,5 +330,46 @@ class Campaign
     {
         return $this->product;
     }
-}
 
+    /**
+     * Set createdBy.
+     *
+     * @param string|null $createdBy
+     *
+     * @return Campaign
+     */
+    public function setCreatedBy($createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy.
+     *
+     * @return string|null
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
+}

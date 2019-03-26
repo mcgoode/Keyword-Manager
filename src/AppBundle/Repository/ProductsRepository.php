@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class ProductsRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByActiveClientAndNotRemoved()
+    {
+        return $this->createQueryBuilder('p')
+//            ->select('CONCAT(c.name," - ",p.name) AS name')
+            ->join('p.client','c')
+            ->andWhere('c.isActive = :isActive')
+            ->andWhere('p.removedBy is null')
+            ->andWhere('p.removedOn is null')
+            ->setParameter('isActive',true)
+            ;
+    }
 }

@@ -45,8 +45,6 @@ class Product
     /**
      * @var \DateTime
      *
-     * @Assert\DateTime()
-     *
      * @ORM\Column(name="createdOn", type="date")
      */
     private $createdOn;
@@ -54,16 +52,12 @@ class Product
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     *
      * @ORM\Column(name="createdBy", type="string", length=255)
      */
     private $createdBy;
 
     /**
      * @var \DateTime
-     *
-     * @Assert\DateTime()
      *
      * @ORM\Column(name="removedOn", type="date", length=255, nullable=true)
      */
@@ -79,15 +73,15 @@ class Product
     /**
      * @var Client
      *
-     * @ORM\OneToMany(targetEntity="Client", mappedBy="products")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="products", fetch="EAGER")
+     * @ORM\JoinColumn(name="client", referencedColumnName="id")
      */
     private $client;
 
     /**
      * @var Campaign
      *
-     * @ORM\ManyToOne(targetEntity="Campaign", inversedBy="product")
-     * @ORM\JoinColumn(name="campaigns", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="product")
      */
     private $campaigns;
 
@@ -264,5 +258,56 @@ class Product
     {
         $this->campaigns = $campaigns;
     }
-}
 
+    /**
+     * Add client.
+     *
+     * @param Client $client
+     *
+     * @return Product
+     */
+    public function addClient(Client $client)
+    {
+        $this->client[] = $client;
+
+        return $this;
+    }
+
+    /**
+     * Remove client.
+     *
+     * @param Client $client
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeClient(Client $client)
+    {
+        return $this->client->removeElement($client);
+    }
+
+    /**
+     * Add campaign.
+     *
+     * @param Campaign $campaign
+     *
+     * @return Product
+     */
+    public function addCampaign(Campaign $campaign)
+    {
+        $this->campaigns[] = $campaign;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaign.
+     *
+     * @param Campaign $campaign
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCampaign(Campaign $campaign)
+    {
+        return $this->campaigns->removeElement($campaign);
+    }
+}

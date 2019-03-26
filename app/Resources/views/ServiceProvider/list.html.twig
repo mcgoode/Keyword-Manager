@@ -13,7 +13,7 @@
         <h1 class="h2">Service Providers</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <button type="button" class="btn btn-sm btn-outline-success">Add Service Provider</button>
+                <a href="{{ path('serviceProvider_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Service Provider</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -34,15 +34,18 @@
             </tr>
             </thead>
             <tbody>
+            {# @var provider \AppBundle\Entity\ServiceProvider #}
+            {% for provider in serviceProviders %}
             <tr>
-                <td>Skycore</td>
-                <td>77177</td>
-                <td>True</td>
-                <td>admin</td>
-                <td>1/1/2011</td>
-                <td></td>
-                <td></td>
+                <td><a href="{{ path('serviceProvider_modify', {'id': provider.id}) }}">{{ provider.provider }}</a></td>
+                <td>{{ provider.shortcode }}</td>
+                <td>{{ provider.active? 'Yes':'No' }}</td>
+                <td>{{ provider.createdOn|date('Y-m-d') }}</td>
+                <td>{{ provider.createdBy }}</td>
+                <td>{{ provider.removedOn? provider.removedOn|date('Y-m-d') }}</td>
+                <td>{{ provider.removedBy }}</td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

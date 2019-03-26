@@ -30,17 +30,22 @@
                 <th>Created By</th>
                 <th>Removed</th>
                 <th>Removed On</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
+            {# @var product \AppBundle\Entity\Product #}
+            {% for product in products %}
             <tr>
-                <td>Deep Dish</td>
-                <td>Pizza Hut</td>
-                <td>admin</td>
-                <td>1/1/2001</td>
-                <td></td>
-                <td></td>
+                <td><a href="{{ path('product_modify', {'id': product.id}) }}">{{ product.name }}</a></td>
+                <td>{{ product.client.name }}</td>
+                <td>{{ product.createdOn|date('Y-m-d') }}</td>
+                <td>{{ product.createdBy }}</td>
+                <td>{{ product.removedOn ? product.removedOn|date('Y-m-d') }}</td>
+                <td>{{ product.removedBy }}</td>
+                <td><a href="{{ path('product_remove', {'id': product.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

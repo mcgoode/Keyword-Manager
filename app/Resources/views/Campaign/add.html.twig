@@ -1,7 +1,21 @@
 {% extends "base.html.twig" %}
 
-{% block title %}AppBundle:Campaign:add{% endblock %}
+{% block title %}Create Campaign{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Campaign:add page</h1>
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+    <h1>Create campaign</h1>
+    {% include 'Campaign/_form.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+
+    </script>
 {% endblock %}

@@ -15,9 +15,11 @@ class ProductController extends Controller
      */
     public function listAction()
     {
-        return $this->render('Product/list.html.twig', array(
-            // ...
-        ));
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+
+        return $this->render('Product/list.html.twig',[
+            'products'=>$products
+        ]);
     }
 
     /**
@@ -32,14 +34,10 @@ class ProductController extends Controller
         // force class to array for getting username. This is only due to not creating a proper user system!
         $userArray = array_values((array)$this->getUser());
 
-
         $form = $this->createForm(ProductType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //$form->getData() holds the submitted values
-            // but, the original `$client` variable has also been updated
-
 
             /** @var Product $product */
             $product = $form->getData();
@@ -47,10 +45,6 @@ class ProductController extends Controller
             $product->setCreatedBy($userArray[0]);
             $product->setCreatedOn( new \DateTime('now'));
 
-            dump($product);
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -89,4 +83,20 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * @Route("products/{id}/remove", name="product_remove")
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function removeAction(Product $product)
+    {
+        $userArray = array_values((array)$this->getUser());
+        $product->setRemovedBy($userArray[0])->setRemovedOn( new \DateTime('now'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('product_list');
+    }
 }
