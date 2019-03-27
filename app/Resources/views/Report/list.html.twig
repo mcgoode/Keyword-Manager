@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Campaigns{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Reports</h1>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ path('report_active_ended') }}">Active but ended campaigns</a></li>
+    </ul>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Active Ended Campaigns{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+
+
+{% endblock %}
+
+{% block mainContent %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Products</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('product_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Product</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-responsive ">
+        <table class="table table-striped table-sm" id="active-ended-report-table">
+            <thead>
+            <tr>
+                <th>Campaign</th>
+                <th>Client</th>
+                <th>Product</th>
+                <th>Keyword</th>
+                <th>ShortCode</th>
+                <th>Provider</th>
+                <th>Ended</th>
+            </tr>
+            </thead>
+            <tbody>
+            {# @var campaign \AppBundle\Entity\Campaign #}
+            {% for campaign in campaings %}
+                <tr>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.product.client.name }}</td>
+                    <td>{{ campaign.product.name }}</td>
+                    <td>{{ campaign.keyword }}</td>
+                    <td>{{ campaign.shortcode.shortcode }}</td>
+                    <td>{{ campaign.shortcode.provider }}</td>
+                    <td>{{ campaign.endDate|date('Y-m-d') }}</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('#active-ended-report-table').DataTable({
+            dom: 'Blfrtip',
+
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+
+    </script>
+{% endblock %}

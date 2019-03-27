@@ -173,10 +173,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if app.request.attributes.get('_route') == 'report_list' %}active{% endif %}" href="#">
+                            <a class="nav-link {% if app.request.attributes.get('_route') == 'report_list' %}active{% endif %}" href="{{ path('report_list') }}">
                                 <span class="fas fa-database"></span>
                                 Reports
                             </a>
+                            <ul style="list-style: none">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if app.request.attributes.get('_route') == 'report_active_ended' %}active{% endif %}" href="{{ path('report_active_ended') }}">
+                                        Ended but Active Campaigns
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
                     </ul>
                 </div>
