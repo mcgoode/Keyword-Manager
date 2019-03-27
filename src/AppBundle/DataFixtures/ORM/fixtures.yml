@@ -15,3 +15,11 @@ AppBundle\Entity\Product:
     name: <product()>
     createdOn: <dateTime('now', 'America/New_York')>
     createdBy: <firstName()>
+
+AppBundle\Entity\ServiceProvider:
+  provider{1..2}:
+    provider: <provider()>
+    shortcode: <randomNumber(5)>
+    active: <boolean()>
+    createdOn: <dateTime('now', 'America/New_York')>
+    createdBy: <firstName()>
