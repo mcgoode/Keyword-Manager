@@ -16,7 +16,6 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('client_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Client</a>
                 {% endif %}
-                <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
     </div>
@@ -33,6 +32,10 @@
                 <th>State</th>
                 <th>Zip</th>
                 <th>Active</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th></th>
+                {% endif %}
+
             </tr>
             </thead>
             <tbody>
@@ -50,6 +53,10 @@
                 <td>{{ client.state }}</td>
                 <td>{{ client.zipFive }}</td>
                 <td>{{ client.isActive ? 'Yes':'No' }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('client_remove', {'id': client.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                {% endif %}
+
             </tr>
             {% endfor %}
             </tbody>
@@ -57,9 +64,21 @@
     </div>
 {% endblock %}
 
-
 {% block javascripts %}
     <script>
-        $('#client-table').DataTable();
+        $('#client-table').DataTable({
+            dom: 'Bfrtip',
+            columnDefs: [
+                {% if is_granted('ROLE_ADMIN') %}
+                {'orderable': false, 'searchable': false, targets: 7}
+                {% endif %}
+            ],
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
     </script>
 {% endblock %}
