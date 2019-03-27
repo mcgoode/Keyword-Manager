@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Client;
 use AppBundle\Form\ClientType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,6 +26,7 @@ class ClientController extends Controller
 
     /**
      * @Route("/clients/add", name="client_add")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -58,6 +60,7 @@ class ClientController extends Controller
     /**
      *
      * @Route("/clients/{id}/modify", name="client_modify")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Client $client
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response

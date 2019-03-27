@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ServiceProvider;
 use AppBundle\Form\ServiceProviderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +25,8 @@ class ServiceProviderController extends Controller
     }
 
     /**
-     * @Route("service-provider/add", name="serviceProvider_add")
+     * @Route("service-providers/add", name="serviceProvider_add")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -58,7 +60,8 @@ class ServiceProviderController extends Controller
     }
 
     /**
-     * @Route("service-provider/{id}/modify", name="serviceProvider_modify")
+     * @Route("service-providers/{id}/modify", name="serviceProvider_modify")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @param ServiceProvider $serviceProvider
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response

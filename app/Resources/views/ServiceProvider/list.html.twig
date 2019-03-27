@@ -13,7 +13,9 @@
         <h1 class="h2">Service Providers</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
+                {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('serviceProvider_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Service Provider</a>
+                {% endif %}
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -37,7 +39,11 @@
             {# @var provider \AppBundle\Entity\ServiceProvider #}
             {% for provider in serviceProviders %}
             <tr>
-                <td><a href="{{ path('serviceProvider_modify', {'id': provider.id}) }}">{{ provider.provider }}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('serviceProvider_modify', {'id': provider.id}) }}">{{ provider.provider }}</a></td>
+                {% else %}
+                    <td>{{ provider.provider }}</td>
+                {% endif %}
                 <td>{{ provider.shortcode }}</td>
                 <td>{{ provider.active? 'Yes':'No' }}</td>
                 <td>{{ provider.createdOn|date('Y-m-d') }}</td>

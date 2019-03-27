@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Campaign;
 use AppBundle\Form\CampaignType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,7 @@ class CampaignController extends Controller
 
     /**
      * @Route("campaign/add", name="campaign_add")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
     {
@@ -55,6 +57,7 @@ class CampaignController extends Controller
 
     /**
      * @Route("campaign/{id}/modify", name="campaign_modify")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @param Campaign $campaign
      * @return \Symfony\Component\HttpFoundation\Response

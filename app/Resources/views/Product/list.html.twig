@@ -13,7 +13,9 @@
         <h1 class="h2">Products</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
+                {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('product_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Product</a>
+                {% endif %}
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -30,20 +32,28 @@
                 <th>Created By</th>
                 <th>Removed</th>
                 <th>Removed On</th>
+                {% if is_granted('ROLE_ADMIN') %}
                 <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {# @var product \AppBundle\Entity\Product #}
             {% for product in products %}
             <tr>
-                <td><a href="{{ path('product_modify', {'id': product.id}) }}">{{ product.name }}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('product_modify', {'id': product.id}) }}">{{ product.name }}</a></td>
+                {% else %}
+                    <td>{{ product.name }}</a></td>
+                {% endif %}
                 <td>{{ product.client.name }}</td>
                 <td>{{ product.createdOn|date('Y-m-d') }}</td>
                 <td>{{ product.createdBy }}</td>
                 <td>{{ product.removedOn ? product.removedOn|date('Y-m-d') }}</td>
                 <td>{{ product.removedBy }}</td>
-                <td><a href="{{ path('product_remove', {'id': product.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('product_remove', {'id': product.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                {% endif %}
             </tr>
             {% endfor %}
             </tbody>
@@ -53,7 +63,9 @@
 
 
 {% block javascripts %}
+
     <script>
+        // todo export pdf excel csv, no sort or search delete last row if exits
         $('#product-table').DataTable();
     </script>
 {% endblock %}

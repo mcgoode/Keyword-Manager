@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\ProductType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,7 @@ class ProductController extends Controller
 
     /**
      * @Route("products/add", name="product_add")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -59,6 +61,7 @@ class ProductController extends Controller
 
     /**
      * @Route("products/{id}/modify", name="product_modify")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Product $product
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -85,6 +88,7 @@ class ProductController extends Controller
 
     /**
      * @Route("products/{id}/remove", name="product_remove")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Product $product
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception

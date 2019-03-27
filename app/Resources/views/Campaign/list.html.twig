@@ -13,7 +13,9 @@
         <h1 class="h2">Campaigns</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
+                {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('campaign_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Campaign</a>
+                {% endif %}
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -42,7 +44,11 @@
             {# @var campaign \AppBundle\Entity\Campaign #}
             {% for campaign in campaigns %}
             <tr>
-                <td><a href="{{ path('campaign_modify', {'id': campaign.id }) }}">{{ campaign.name }}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('campaign_modify', {'id': campaign.id }) }}">{{ campaign.name }}</a></td>
+                {% else %}
+                    <td>{{ campaign.name }}</td>
+                {% endif %}
                 <td>{{ campaign.keyword }}</td>
                 <td>{{ campaign.shortcode.shortcode }}</td>
                 <td>{{ campaign.product.name }}</td>

@@ -13,7 +13,9 @@
         <h1 class="h2">Clients</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
+                {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('client_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Client</a>
+                {% endif %}
                 <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
@@ -37,7 +39,11 @@
             {# @var client \AppBundle\Entity\Client #}
             {% for client in clients %}
             <tr>
-                <td><a href="{{ path('client_modify', {'id': client.id}) }}">{{ client.name }}</a></td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('client_modify', {'id': client.id}) }}">{{ client.name }}</a></td>
+                {% else %}
+                    <td>{{ client.name }}</td>
+                {% endif %}
                 <td>{{ client.addressOne }}</td>
                 <td>{{ client.addressTwo }}</td>
                 <td>{{ client.city }}</td>
