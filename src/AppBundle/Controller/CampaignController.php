@@ -112,7 +112,7 @@ class CampaignController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->redirectToRoute('client_list');
+        return $this->redirectToRoute('campaign_list');
     }
 
 }
