@@ -32,6 +32,10 @@
                 <th>State</th>
                 <th>Zip</th>
                 <th>Active</th>
+                <th>Created By</th>
+                <th>Created On</th>
+                <th>Removed By</th>
+                <th>Removed On</th>
                 {% if is_granted('ROLE_ADMIN') %}
                     <th></th>
                 {% endif %}
@@ -53,8 +57,16 @@
                 <td>{{ client.state }}</td>
                 <td>{{ client.zipFive }}</td>
                 <td>{{ client.isActive ? 'Yes':'No' }}</td>
+                <td>{{ client.createdBy }}</td>
+                <td>{{ client.createdOn|date('Y-m-d') }}</td>
+                <td>{{ client.removedBy }}</td>
+                <td>{{ client.removedOn? client.removedOn|date('Y-m-d') }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td><a href="{{ path('client_remove', {'id': client.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                    {% if client.removedOn is not null %}
+                        <td><a href="{{ path('client_restore', {'id': client.id}) }}"><i class="fas fa-undo text-success"></i></a></td>
+                    {% else %}
+                        <td><a href="{{ path('client_remove', {'id': client.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                    {% endif %}
                 {% endif %}
 
             </tr>
@@ -67,10 +79,10 @@
 {% block javascripts %}
     <script>
         $('#client-table').DataTable({
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
             columnDefs: [
                 {% if is_granted('ROLE_ADMIN') %}
-                {'orderable': false, 'searchable': false, targets: 7}
+                {'orderable': false, 'searchable': false, targets: 11}
                 {% endif %}
             ],
             buttons: [

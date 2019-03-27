@@ -63,9 +63,12 @@
                 <td>{{ campaign.removedOn? campaign.removedOn|date('Y-m-d') }}</td>
                 <td>{{ campaign.active? 'Yes':'No' }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td><a href="{{ path('campaign_remove', {'id': campaign.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                    {% if campaign.removedOn is not null %}
+                        <td><a href="{{ path('campaign_restore', {'id': campaign.id}) }}"><i class="fas fa-undo text-success"></i></a></td>
+                    {% else %}
+                        <td><a href="{{ path('campaign_remove', {'id': campaign.id}) }}"><i class="fas fa-trash text-danger"></i></a></td>
+                    {% endif %}
                 {% endif %}
-
             </tr>
             {% endfor %}
             </tbody>
@@ -76,7 +79,7 @@
 {% block javascripts %}
     <script>
         $('#campaign-table').DataTable({
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
             columnDefs: [
                 {% if is_granted('ROLE_ADMIN') %}
                 {'orderable': false, 'searchable': false, targets: 12}
