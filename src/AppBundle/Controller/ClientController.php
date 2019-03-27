@@ -84,4 +84,23 @@ class ClientController extends Controller
             'client' => $client
         ]);
     }
+
+    /**
+     * @Route("clients/{id}/remove", name="client_remove")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Client $client
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function removeAction(Client $client)
+    {
+        $userArray = array_values((array)$this->getUser());
+        $client->setRemovedBy($userArray[0])->setRemovedOn( new \DateTime('now'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
 }

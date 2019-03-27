@@ -85,4 +85,21 @@ class ServiceProviderController extends Controller
         ]);
     }
 
+    /**
+     * @Route("service-providers/{id}/remove", name="serviceProvider_remove")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param ServiceProvider $provider
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function removeAction(ServiceProvider $provider)
+    {
+        $userArray = array_values((array)$this->getUser());
+        $provider->setRemovedBy($userArray[0])->setRemovedOn( new \DateTime('now'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
 }

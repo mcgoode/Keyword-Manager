@@ -81,4 +81,22 @@ class CampaignController extends Controller
         ]);
     }
 
+    /**
+     * @Route("campaigns/{id}/remove", name="campaign_remove")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Campaign $campaign
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function removeAction(Campaign $campaign)
+    {
+        $userArray = array_values((array)$this->getUser());
+        $campaign->setRemovedBy($userArray[0])->setRemovedOn( new \DateTime('now'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
 }
