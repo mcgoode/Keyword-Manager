@@ -103,4 +103,21 @@ class ProductController extends Controller
 
         return $this->redirectToRoute('product_list');
     }
+
+    /**
+     * @Route("product/{id}/restore", name="product_restore")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function restoreAction(Product $product)
+    {
+        $product->setRemovedBy(null)->setRemovedOn( null);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
 }

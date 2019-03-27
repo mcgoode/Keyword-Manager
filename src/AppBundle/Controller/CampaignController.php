@@ -99,4 +99,20 @@ class CampaignController extends Controller
         return $this->redirectToRoute('campaign_list');
     }
 
+    /**
+     * @Route("campaigns/{id}/restore", name="campaign_restore")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Campaign $campaign
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function restoreAction(Campaign $campaign)
+    {
+        $campaign->setRemovedBy(null)->setRemovedOn( null);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
 }

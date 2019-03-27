@@ -29,6 +29,7 @@ class ClientController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function addAction(Request $request)
     {
@@ -40,9 +41,12 @@ class ClientController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
              //$form->getData() holds the submitted values
             // but, the original `$client` variable has also been updated
+            $userArray = array_values((array)$this->getUser());
 
+            /** @var Client $client */
             $client = $form->getData();
-
+            $client->setCreatedOn( new \DateTime('now'))
+                ->setCreatedBy($userArray[0]);
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
              $em = $this->getDoctrine()->getManager();
@@ -96,6 +100,23 @@ class ClientController extends Controller
     {
         $userArray = array_values((array)$this->getUser());
         $client->setRemovedBy($userArray[0])->setRemovedOn( new \DateTime('now'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
+    /**
+     * @Route("clients/{id}/restore", name="client_restore")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param Client $client
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function restoreAction(Client $client)
+    {
+        $client->setRemovedBy(null)->setRemovedOn( null);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();

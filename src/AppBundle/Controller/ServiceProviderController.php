@@ -102,4 +102,21 @@ class ServiceProviderController extends Controller
 
         return $this->redirectToRoute('serviceProvider_list');
     }
+
+    /**
+     * @Route("service-providers/{id}/restore", name="serviceProvider_restore")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param ServiceProvider $provider
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function restoreAction(ServiceProvider $provider)
+    {
+        $provider->setRemovedBy(null)->setRemovedOn( null);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('client_list');
+    }
+
 }

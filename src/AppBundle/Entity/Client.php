@@ -118,11 +118,30 @@ class Client
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $createdBy;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $createdOn;
+
+    /**
+     * @ORM\Column(type="string",nullable=true,length=255)
+     */
+    private $removedBy;
+
+    /**
+     * @ORM\Column(type="date",nullable=true)
+     */
+    private $removedOn;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -343,4 +362,78 @@ class Client
     {
         return $this->products->removeElement($product);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @param mixed $createdBy
+     * @return Client
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param mixed $createdOn
+     * @return Client
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemovedBy()
+    {
+        return $this->removedBy;
+    }
+
+    /**
+     * @param mixed $removedBy
+     * @return Client
+     */
+    public function setRemovedBy($removedBy)
+    {
+        $this->removedBy = $removedBy;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemovedOn()
+    {
+        return $this->removedOn;
+    }
+
+    /**
+     * @param mixed $removedOn
+     * @return Client
+     */
+    public function setRemovedOn($removedOn)
+    {
+        $this->removedOn = $removedOn;
+        return $this;
+    }
+
+
 }

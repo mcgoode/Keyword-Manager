@@ -6,6 +6,8 @@ AppBundle\Entity\Client:
     state: <state()>
     zipFive: <postcode()>
     isActive: <boolean()>
+    createdOn: <dateTime('now', 'America/New_York')>
+    createdBy: <firstName()>
 
 AppBundle\Entity\Product:
   product_{1..100}:
