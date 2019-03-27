@@ -16,7 +16,6 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('product_add') }}" role="button" class="btn btn-sm btn-outline-success">Add Product</a>
                 {% endif %}
-                <button type="button" class="btn btn-sm btn-outline-secondary disabled">Export</button>
             </div>
         </div>
     </div>
@@ -66,6 +65,19 @@
 
     <script>
         // todo export pdf excel csv, no sort or search delete last row if exits
-        $('#product-table').DataTable();
+        $('#product-table').DataTable({
+            dom: 'Bfrtip',
+            columnDefs:[
+                {% if is_granted('ROLE_ADMIN') %}
+                {'orderable': false,'searchable':false, targets: 6}
+                {% endif %}
+            ],
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
     </script>
 {% endblock %}
