@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function dashboardAction()
     {
-        $activeCampaigns = $this->getDoctrine()->getRepository(Campaign::class)->findBy(['active'=>true]);
+        $activeCampaigns = $this->getDoctrine()->getRepository(Campaign::class)->findByActiveAndNotPastEndDate();
 
         // replace this example code with whatever you need
         return $this->render('Dashboard/index.html.twig',[
